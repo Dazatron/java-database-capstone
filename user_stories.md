@@ -1,239 +1,208 @@
-# User Story Template
-
-**Title:**
-_As a [user role], I want [feature/goal], so that [reason]._
-
-**Acceptance Criteria:**
-1. [Criteria 1]
-2. [Criteria 2]
-3. [Criteria 3]
-
-**Priority:** [High/Medium/Low]
-**Story Points:** [Estimated Effort in Points]
-**Notes:**
-- [Additional information or edge cases]
+# User Stories – Healthcare Appointment Platform
 
 ## Admin User Stories
 
-**Title: Manage Platform**
-_As an ADMIN, I want login in to a portal using username and password, so that I can manage the platform securely._
+### 1. Manage Platform Login
+**As an** ADMIN, **I want** to log in using a username and password, **so that** I can manage the platform securely.  
 
 **Acceptance Criteria:**
-1. ADMIN can log in using valid username and password
-2. Invalid credentials show an appropriate error message.
-3. Successful login redirects to the Admin Dashboard.
+1. Admin can log in using valid credentials.  
+2. Invalid credentials return an appropriate error message.  
+3. Successful login redirects to the Admin Dashboard.  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- Uses Spring Security authentication flow.
+**Priority:** Medium  
+**Story Points:** 3  
+**Notes:** Uses Spring Security authentication flow.
 
+---
 
-**Title: Log out of platform**
-_As an ADMIN, I want log out of the portal, so that the system is protected from access._
-
-**Acceptance Criteria:**
-1. Enable log out
-
-**Priority:** [Medium]
-**Story Points:** 1
-**Notes:**
-- [Additional information or edge cases]
-
-
-**Title: Add doctors in portal**
-_As an ADMIN, I want add doctors to the portal, so that appointments can be booked with new doctor._
+### 2. Log Out of Platform
+**As an** ADMIN, **I want** to log out of the portal, **so that** unauthorized users can’t access the system.  
 
 **Acceptance Criteria:**
-1. Allow addin new doctors
+1. Admin can log out successfully.  
+2. Session is invalidated after logout.  
 
+**Priority:** Medium  
+**Story Points:** 1  
 
-**Priority:** [Low]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+---
 
-
-**Title: Delete doctors from portal**
-_As an ADMIN, I want delete doctors prfile from the portal, so that no appointments can be booked with that doctor._
-
-**Acceptance Criteria:**
-1. Allow removal of doctor profiles
-
-
-**Priority:** [Low]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
-
-
-**Title: Report - User statitsics**
-_As an ADMIN, I want Run a stored procedure in MySQL CLI, so that I can get the number of appointments per month and track usage statistics._
+### 3. Add Doctors
+**As an** ADMIN, **I want** to add new doctors to the system, **so that** patients can book appointments with them.  
 
 **Acceptance Criteria:**
-1. Create a stored procedure in MySQL that returns stats as specified above
+1. Admin can add a doctor profile with name, specialization, and contact info.  
+2. Validation ensures required fields are present.  
 
+**Priority:** Low  
+**Story Points:** 3  
 
-**Priority:** Low
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+---
 
-
-## Patient User Stories
-
-**Title: View list of doctors**
-_As a PATIENT, I want view a list of doctors without logging in, so that I can explore options before registering._
+### 4. Delete Doctors
+**As an** ADMIN, **I want** to delete doctor profiles from the system, **so that** inactive or unavailable doctors are removed from booking options.  
 
 **Acceptance Criteria:**
-1. So a list of doctors
-2. Does not need to be logged in
+1. Admin can remove doctor profiles.  
+2. Deleting a doctor prevents new appointments from being scheduled with them.  
 
+**Priority:** Low  
+**Story Points:** 3  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+---
 
-
-**Title: Sign up to portal**
-_As a PATIENT, I want Sign up using your email and password, so that I can book appointments._
+### 5. Generate Usage Reports
+**As an** ADMIN, **I want** to run a stored procedure in MySQL, **so that** I can view appointment counts per month and track platform usage.  
 
 **Acceptance Criteria:**
-1. User can sign up
+1. Stored procedure returns monthly appointment counts.  
+2. Results display clearly in the Admin Dashboard.  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+**Priority:** Low  
+**Story Points:** 3  
 
+---
 
-**Title: Log into portal**
-_As a PATIENT, I want Log into the portal, so that so I can manage your bookings._
+## 🩺 Patient User Stories
 
-**Acceptance Criteria:**
-1. User can log into portal
-
-
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
-
-
-**Title: Log out of portal**
-_As a PATIENT, I want Log out of the portal, so that I can secure my account._
+### 1. View List of Doctors
+**As a** PATIENT, **I want** to view a list of doctors without logging in, **so that** I can explore options before registering.  
 
 **Acceptance Criteria:**
-1. user can log out
+1. List of doctors is publicly viewable.  
+2. Doctor name, specialization, and availability are displayed.  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+**Priority:** Medium  
+**Story Points:** 3  
 
+---
 
-**Title: Book an appointment**
-_As a PATIENT, I want Log in and book an hour-long appointment, so that so I can consult with a doctor._
-
-**Acceptance Criteria:**
-1. Log into portal
-2. Book an appointment
-
-
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
-
-
-**Title: View upcoming appointments**
-_As a PATIENT, I want View my upcoming appointments, so that I can prepare accordingly._
+### 2. Sign Up
+**As a** PATIENT, **I want** to register using my email and password, **so that** I can book appointments.  
 
 **Acceptance Criteria:**
-1. User can view my upcoming appointments
+1. User can create an account.  
+2. Email and password validation is enforced.  
+3. Passwords are hashed before storage.  
 
+**Priority:** Medium  
+**Story Points:** 3  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+---
 
-
-## Doctor User Stories
-
-**Title: Log into portal**
-_As a DOCTOR, I want Log into the portal, so that I can manage your appointments._
+### 3. Log In
+**As a** PATIENT, **I want** to log into the portal, **so that** I can manage my appointments.  
 
 **Acceptance Criteria:**
-1. Can log into portal
+1. User can log in using registered credentials.  
+2. Invalid credentials display an error message.  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+**Priority:** Medium  
+**Story Points:** 3  
 
+---
 
-**Title: Log out of portal**
-_As a DOCTOR, I want Log out of the portal, so that I can protect my data._
-
-**Acceptance Criteria:**
-1. Logout of portal
-
-
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
-
-
-**Title: View my appointment calendar**
-_As a DOCTOR, I want View my appointment calendar, so that I can stay organized._
+### 4. Log Out
+**As a** PATIENT, **I want** to log out of the portal, **so that** my account remains secure.  
 
 **Acceptance Criteria:**
-1. View my appointment calendar
+1. User can log out successfully.  
+2. Session is terminated.  
 
+**Priority:** Medium  
+**Story Points:** 1  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+---
 
-
-**Title: Mark my unavailability**
-_As a DOCTOR, I want Mark my unavailability, so that to inform patients only the available slots._
-
-**Acceptance Criteria:**
-1. Mark my unavailability
-
-
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
-
-
-**Title: Update your profile with specialization and contact information**
-_As a DOCTOR, I want update your profile with specialization and contact information, so that patients have up-to-date information._
+### 5. Book Appointment
+**As a** PATIENT, **I want** to log in and book an hour-long appointment, **so that** I can consult with a doctor.  
 
 **Acceptance Criteria:**
-1. update your profile with specialization
-2. update your profile with contact info
+1. User must be logged in to book.  
+2. Appointment duration defaults to one hour.  
+3. Confirmation message is displayed upon success.  
 
+**Priority:** Medium  
+**Story Points:** 3  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+---
 
-
-**Title: View the patient details for upcoming appointments**
-_As a DOCTOR, I want View the patient details for upcoming appointments, so that so that I can be prepared._
+### 6. View Upcoming Appointments
+**As a** PATIENT, **I want** to view my upcoming appointments, **so that** I can plan accordingly.  
 
 **Acceptance Criteria:**
-1. View the patient details for upcoming appointments
+1. Upcoming appointments are listed with date, time, and doctor info.  
 
-**Priority:** [Medium]
-**Story Points:** 3
-**Notes:**
-- [Additional information or edge cases]
+**Priority:** Medium  
+**Story Points:** 3  
+
+---
+
+## 🩺 Doctor User Stories
+
+### 1. Log In
+**As a** DOCTOR, **I want** to log into the portal, **so that** I can manage my appointments.  
+
+**Acceptance Criteria:**
+1. Doctor can log in using valid credentials.  
+
+**Priority:** Medium  
+**Story Points:** 3  
+
+---
+
+### 2. Log Out
+**As a** DOCTOR, **I want** to log out of the portal, **so that** my session remains secure.  
+
+**Acceptance Criteria:**
+1. Logout terminates session.  
+
+**Priority:** Medium  
+**Story Points:** 1  
+
+---
+
+### 3. View Appointment Calendar
+**As a** DOCTOR, **I want** to view my appointment calendar, **so that** I can stay organized.  
+
+**Acceptance Criteria:**
+1. Calendar shows all upcoming appointments by date/time.  
+
+**Priority:** Medium  
+**Story Points:** 3  
+
+---
+
+### 4. Mark Unavailability
+**As a** DOCTOR, **I want** to mark my unavailability, **so that** patients can only book available slots.  
+
+**Acceptance Criteria:**
+1. Doctor can specify unavailable time slots.  
+2. System prevents bookings during those times.  
+
+**Priority:** Medium  
+**Story Points:** 3  
+
+---
+
+### 5. Update Profile
+**As a** DOCTOR, **I want** to update my specialization and contact information, **so that** patients have accurate details.  
+
+**Acceptance Criteria:**
+1. Doctor can update specialization and contact info.  
+2. Changes are reflected in the patient view.  
+
+**Priority:** Medium  
+**Story Points:** 3  
+
+---
+
+### 6. View Patient Details
+**As a** DOCTOR, **I want** to view patient details for upcoming appointments, **so that** I can prepare in advance.  
+
+**Acceptance Criteria:**
+1. Doctor can view patient name, contact info, and reason for visit.  
+
+**Priority:** Medium  
+**Story Points:** 3  
