@@ -92,6 +92,9 @@
     "location": "Market Street"
   }
 }
+```
+
+---
 
 ### **Collection: feedback**
 ```json
@@ -102,6 +105,7 @@
   "comment": "Great service",
   "date": "2025-12-01"
 }
+```
 
 ---
 
@@ -124,5 +128,6 @@
     }
   ]
 }
+```
 
 
