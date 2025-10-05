@@ -13,6 +13,7 @@ _As a [user role], I want [feature/goal], so that [reason]._
 **Notes:**
 - [Additional information or edge cases]
 
+## Admin User Stories
 
 **Title: Manage Platform**
 _As an ADMIN, I want login in to a portal using username and password, so that I can manage the platform securely._
@@ -78,6 +79,8 @@ _As an ADMIN, I want Run a stored procedure in MySQL CLI, so that I can get the 
 **Notes:**
 - [Additional information or edge cases]
 
+
+## Patient User Stories
 
 **Title: View list of doctors**
 _As a PATIENT, I want view a list of doctors without logging in, so that I can explore options before registering._
@@ -157,7 +160,7 @@ _As a PATIENT, I want View my upcoming appointments, so that I can prepare accor
 - [Additional information or edge cases]
 
 
-
+## Doctor User Stories
 
 **Title: Log into portal**
 _As a DOCTOR, I want Log into the portal, so that I can manage your appointments._
