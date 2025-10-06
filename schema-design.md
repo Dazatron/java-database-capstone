@@ -15,11 +15,11 @@
 | Column | Type | Constraints | Description |
 |---------|------|-------------|--------------|
 | id | INT | Primary Key, Auto Increment | Unique identifier for patient |
-| first_name | VARCHAR(255) | NOT NULL | Patient’s first name |
-| last_name | VARCHAR(255) | NOT NULL | Patient’s last name |
-| date_of_birth | DATE | NOT NULL | Date of birth |
-| user_name | VARCHAR(255) | NOT NULL | Login username |
-| password_hash | VARCHAR(255) | NOT NULL | Hashed password (bcrypt or Argon2) |
+| name | VARCHAR(100) | NOT NULL | Patient’s name |
+| email | VARCHAR(255) | NULL | Contact details (email) |
+| password | VARCHAR(255) | NOT NULL | Hashed password |
+| phone | VARCHAR(10) | NOT NULL | Contact details (phone) |
+| address | VARCHAR(255) | NOT NULL | Patirnts address |
 
 ---
 
@@ -27,13 +27,11 @@
 | Column | Type | Constraints | Description |
 |---------|------|-------------|--------------|
 | id | INT | Primary Key, Auto Increment | Unique identifier for doctor |
-| first_name | VARCHAR(255) | NOT NULL | Doctor’s first name |
-| last_name | VARCHAR(255) | NOT NULL | Doctor’s last name |
-| user_name | VARCHAR(255) | NOT NULL | Login username |
-| password_hash | VARCHAR(255) | NOT NULL | Hashed password |
-| specialization | VARCHAR(255) | NULL | Doctor’s area of specialization |
-| contact_email | VARCHAR(255) | NULL | Contact details (email) |
-| contact_phone | VARCHAR(255) | NULL | Contact details (phone) |
+| name | VARCHAR(100) | NOT NULL | Doctor’s name |
+| specialty | VARCHAR(255) | NOT NULL | Doctor’s area of specialization |
+| email | VARCHAR(255) | NOT NULL | Contact details (email) |
+| password | VARCHAR(255) | NOT NULL | Hashed password |
+| phone | VARCHAR(10) | NOT NULL | Contact details (phone) |
 | availableTimes | List<String> | NULL | Doctors availability |
 
 ---
@@ -42,9 +40,9 @@
 | Column | Type | Constraints | Description |
 |---------|------|-------------|--------------|
 | id | INT | Primary Key, Auto Increment | Unique identifier for appointment |
-| doctor_id | INT | Foreign Key → `doctors(id)` | Linked doctor |
-| patient_id | INT | Foreign Key → `patients(id)` | Linked patient |
-| appointment_time | DATETIME | NOT NULL | Scheduled time |
+| doctor | INT | Foreign Key → `doctors(id)` | Linked doctor |
+| patientId | INT | Foreign Key → `patients(id)` | Linked patient |
+| appointmentTime | DATETIME | NOT NULL | Scheduled time |
 | status | INT | DEFAULT 0 | 0 = Scheduled, 1 = Completed, 2 = Cancelled |
 
 ---
@@ -53,8 +51,8 @@
 | Column | Type | Constraints | Description |
 |---------|------|-------------|--------------|
 | id | INT | Primary Key, Auto Increment | Unique identifier for admin user |
-| user_name | VARCHAR(255) | NOT NULL | Admin login username |
-| password_hash | VARCHAR(255) | NOT NULL | Hashed password |
+| username | VARCHAR(255) | NOT NULL | Admin login username |
+| password | VARCHAR(255) | NOT NULL | Hashed password |
 
 ---
 
@@ -62,10 +60,10 @@
 | Column | Type | Constraints | Description |
 |---------|------|-------------|--------------|
 | id | INT | Primary Key, Auto Increment | Unique identifier for payment record |
-| patient_id | INT | Foreign Key → `patients(id)` | Associated patient |
-| appointment_id | INT | Foreign Key → `appointments(id)` | Associated appointment |
-| amount_due | DECIMAL(10,2) | NOT NULL | Total payment due |
-| amount_paid | DECIMAL(10,2) | NOT NULL | Amount received |
+| patientId | INT | Foreign Key → `patients(id)` | Associated patient |
+| appointmentId | INT | Foreign Key → `appointments(id)` | Associated appointment |
+| amountDue | DECIMAL(10,2) | NOT NULL | Total payment due |
+| amountPaid | DECIMAL(10,2) | NOT NULL | Amount received |
 
 ---
 
@@ -82,7 +80,7 @@
 ```json
 {
   "_id": "ObjectId('64abc123456')",
-  "patientId": 1,
+  "patientName": "John Doe",
   "appointmentId": 51,
   "medication": "Paracetamol",
   "dosage": "500mg",
