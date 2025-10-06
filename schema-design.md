@@ -34,6 +34,7 @@
 | specialization | VARCHAR(255) | NULL | Doctor’s area of specialization |
 | contact_email | VARCHAR(255) | NULL | Contact details (email) |
 | contact_phone | VARCHAR(255) | NULL | Contact details (phone) |
+| availableTimes | List<String> | NULL | Doctors availability |
 
 ---
 
