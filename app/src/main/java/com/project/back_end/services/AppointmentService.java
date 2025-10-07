@@ -46,6 +46,12 @@ public class AppointmentService {
     }
 
     @Transactional
+    public Appointment getAppointmentById(Long id) {
+        Optional<Appointment> appointmentOptional = appointmentRepository.findById(id);
+        return appointmentOptional.orElse(null);
+    }
+
+    @Transactional
     public ResponseEntity<Map<String, String>> updateAppointment(Appointment appointment) {
         Map<String, String> response = new HashMap<>();
         Optional<Appointment> existingAppointmentOptional = appointmentRepository.findById(appointment.getId());

@@ -20,7 +20,7 @@ public class AdminController {
     @Autowired
     private Service service;
 
-    @PostMapping("/adminLogin")
+    @PostMapping("/login")
     public ResponseEntity<Map<String, String>> adminLogin(@RequestBody Admin admin) {
         return service.validateAdmin(admin);
     }
