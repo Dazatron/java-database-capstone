@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.project.back_end.DTO.AppointmentDTO;
 import com.project.back_end.models.Patient;
-import com.project.back_end.repo.AppointmentRepository;
-import com.project.back_end.repo.PatientRepository;
+import com.project.back_end.repo.jpa.AppointmentRepository;
+import com.project.back_end.repo.jpa.PatientRepository;
 
 import jakarta.transaction.Transactional;
 

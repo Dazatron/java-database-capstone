@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.project.back_end.models.Prescription;
-import com.project.back_end.repo.PrescriptionRepository;
+import com.project.back_end.repo.mongo.PrescriptionRepository;
 
 import jakarta.transaction.Transactional;
 

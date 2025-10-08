@@ -5,9 +5,9 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.project.back_end.repo.AdminRepository;
-import com.project.back_end.repo.DoctorRepository;
-import com.project.back_end.repo.PatientRepository;
+import com.project.back_end.repo.jpa.AdminRepository;
+import com.project.back_end.repo.jpa.DoctorRepository;
+import com.project.back_end.repo.jpa.PatientRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

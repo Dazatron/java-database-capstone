@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.project.back_end.models.Appointment;
-import com.project.back_end.repo.AppointmentRepository;
-import com.project.back_end.repo.DoctorRepository;
+import com.project.back_end.repo.jpa.AppointmentRepository;
+import com.project.back_end.repo.jpa.DoctorRepository;
 
 import jakarta.transaction.Transactional;
 
