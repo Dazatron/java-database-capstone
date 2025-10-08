@@ -126,9 +126,17 @@ public class Service {
                 response.put("error", "Invalid password");
                 return ResponseEntity.status(401).body(response);
             }
-            String token = tokenService.generateToken(patient.getEmail());
-            response.put("token", token);
-            return ResponseEntity.ok(response);
+
+            try {
+                String token = tokenService.generateToken(patient.getEmail());
+                response.put("token", token);
+                return ResponseEntity.ok(response);
+            } catch (Exception e) {
+
+                response.put("error", "Token generation failed");
+                return ResponseEntity.status(500).body(response);
+            }
+
         } catch (Exception e) {
             response.put("error", "Internal server error");
             return ResponseEntity.status(500).body(response);
