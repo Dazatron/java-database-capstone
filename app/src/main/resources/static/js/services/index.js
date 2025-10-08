@@ -6,17 +6,23 @@ const DOCTOR_API = `${BASE_API_URL}/doctor/login`;
 
 // Run after DOM loads
 window.onload = () => {
-  const adminLoginBtn = document.getElementById("adminLogin");
-  const doctorLoginBtn = document.getElementById("doctorLogin");
+  const adminBtn = document.getElementById("adminBtn");
+  const patientBtn = document.getElementById("patientBtn");
+  const doctorBtn = document.getElementById("doctorBtn");
 
-  if (adminLoginBtn) {
-    adminLoginBtn.addEventListener("click", () => openModal("adminLogin"));
+  if (adminBtn) {
+    adminBtn.addEventListener("click", () => openModal("adminLogin"));
   }
 
-  if (doctorLoginBtn) {
-    doctorLoginBtn.addEventListener("click", () => openModal("doctorLogin"));
+  if (doctorBtn) {
+    doctorBtn.addEventListener("click", () => openModal("doctorLogin"));
+  }
+
+  if (patientBtn) {
+    patientBtn.addEventListener("click", () => openModal("patientLogin"));
   }
 };
+
 
 // ===============================
 // Admin Login Handler
