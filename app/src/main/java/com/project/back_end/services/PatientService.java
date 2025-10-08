@@ -39,7 +39,7 @@ public class PatientService {
     @Transactional
     public ResponseEntity<Map<String, Object>> getPatientAppointment(Long patientId) {
         try {
-            var appointments = appointmentRepository.findByPatientId(patientId);
+            var appointments = appointmentRepository.findByPatient_Id(patientId);
             var appointmentDTOs = appointments.stream()
                     .map(appointment -> new AppointmentDTO(
                             appointment.getId(),

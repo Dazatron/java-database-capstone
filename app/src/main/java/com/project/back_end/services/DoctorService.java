@@ -34,7 +34,7 @@ public class DoctorService {
         try {
             LocalDateTime startOfDay = date.atStartOfDay();
             LocalDateTime endOfDay = date.atTime(23, 59, 59);
-            var appointments = appointmentRepository.findByDoctorIdAndAppointmentTimeBetween(doctorId, startOfDay,
+            var appointments = appointmentRepository.findByDoctor_IdAndAppointmentTimeBetween(doctorId, startOfDay,
                     endOfDay);
             var bookedSlots = appointments.stream()
                     .map(appointment -> appointment.getAppointmentTime().toLocalTime().toString())
@@ -105,7 +105,7 @@ public class DoctorService {
             if (existingDoctor.isEmpty()) {
                 return -1;
             }
-            appointmentRepository.deleteAllByDoctorId(doctorId);
+            appointmentRepository.deleteAllByDoctor_Id(doctorId);
             doctorRepository.deleteById(doctorId);
             return 1;
         } catch (Exception e) {
