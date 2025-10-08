@@ -126,7 +126,7 @@ public class DoctorService {
                 response.put("error", "Invalid password");
                 return ResponseEntity.status(401).body(response);
             }
-            String token = tokenService.generateToken(doctor.getId(), "doctor");
+            String token = tokenService.generateToken(login.getIdentifier());
             response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (Exception e) {

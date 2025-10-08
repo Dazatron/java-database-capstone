@@ -151,7 +151,7 @@ public class PatientService {
     @Transactional
     public ResponseEntity<Map<String, Object>> getPatientDetails(String token) {
         try {
-            String email = tokenService.extractEmail(token);
+            String email = tokenService.extractIdentifier(token);
             if (email == null) {
                 return ResponseEntity.status(403).body(Map.of("error", "Invalid token"));
             }

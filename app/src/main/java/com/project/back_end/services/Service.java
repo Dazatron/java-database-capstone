@@ -58,7 +58,7 @@ public class Service {
             var admin = adminRepository.findByUsername(receivedAdmin.getUsername());
             if (admin != null) {
                 if (admin.getPassword().equals(receivedAdmin.getPassword())) {
-                    String token = tokenService.generateToken(admin.getUsername(), "admin");
+                    String token = tokenService.generateToken(admin.getUsername());
                     return ResponseEntity.ok(Map.of("token", token));
                 } else {
                     return ResponseEntity.status(401).body(Map.of("error", "Invalid password"));
@@ -126,7 +126,7 @@ public class Service {
                 response.put("error", "Invalid password");
                 return ResponseEntity.status(401).body(response);
             }
-            String token = tokenService.generateToken(patient.getEmail(), "patient");
+            String token = tokenService.generateToken(patient.getEmail());
             response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -139,7 +139,7 @@ public class Service {
     public ResponseEntity<Map<String, Object>> filterPatient(String condition, String name, String token) {
         Map<String, Object> response = new HashMap<>();
         try {
-            String email = tokenService.extractUsername(token);
+            String email = tokenService.extractIdentifier(token);
             if (email == null || email.isEmpty()) {
                 response.put("error", "Invalid token");
                 return ResponseEntity.status(403).body(response);

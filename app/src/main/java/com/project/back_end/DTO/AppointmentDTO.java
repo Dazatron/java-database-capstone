@@ -81,4 +81,16 @@ public class AppointmentDTO {
 
         return status;
     }
+
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public LocalTime getAppointmentTimeOnly() {
+        return appointmentTimeOnly;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
 }
