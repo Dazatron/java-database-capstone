@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.project.back_end.DTO.AppointmentDTO;
 import com.project.back_end.DTO.Login;
 import com.project.back_end.models.Doctor;
 import com.project.back_end.repo.jpa.AppointmentRepository;
@@ -148,9 +149,9 @@ public class DoctorService {
     }
 
     @Transactional
-    public Map<String, Object> filterDoctorsByNameSpecilityandTime(String name, String specility, String amOrPm) {
+    public Map<String, Object> filterDoctorsByNameSpecialityandTime(String name, String speciality, String amOrPm) {
         try {
-            var doctors = doctorRepository.findByNameContainingIgnoreCaseAndSpecialtyIgnoreCase(name, specility);
+            var doctors = doctorRepository.findByNameContainingIgnoreCaseAndSpecialtyIgnoreCase(name, speciality);
             if (amOrPm != null && !amOrPm.isEmpty()) {
                 doctors = filterDoctorByTime(doctors, amOrPm);
             }
@@ -243,4 +244,63 @@ public class DoctorService {
         }
     }
 
+    @Transactional
+    public List<Doctor> filterDoctorByName(List<Doctor> doctors, String name) {
+        return doctors.stream()
+                .filter(d -> d.getName() != null && d.getName().toLowerCase().contains(name.toLowerCase()))
+                .toList();
+    }
+
+    @Transactional
+    public List<Doctor> filterDoctorBySpeciality(List<Doctor> doctors, String speciality) {
+        return doctors.stream()
+                .filter(d -> d.getSpecialty() != null && d.getSpecialty().equalsIgnoreCase(speciality))
+                .toList();
+    }
+
+    @Transactional
+    public List<Doctor> filterDoctorByExactTime(List<Doctor> doctors, String timeRange) {
+        return doctors.stream()
+                .filter(doctor -> doctor.getAvailableTimes() != null &&
+                        doctor.getAvailableTimes().stream()
+                                .anyMatch(slot -> slot.equalsIgnoreCase(timeRange)))
+                .toList();
+    }
+
+    @Transactional
+    public List<Doctor> filterDoctorsByTimePeriod(List<Doctor> doctors, String amOrPm) {
+        return doctors.stream()
+                .filter(doctor -> doctor.getAvailableTimes() != null &&
+                        doctor.getAvailableTimes().stream().anyMatch(available_times -> {
+                            String startTime = available_times.split("-")[0];
+                            int hour = Integer.parseInt(startTime.split(":")[0]);
+                            return (amOrPm.equalsIgnoreCase("AM") && hour < 12) ||
+                                    (amOrPm.equalsIgnoreCase("PM") && hour >= 12);
+                        }))
+                .toList();
+    }
+
+    @Transactional
+    public ResponseEntity<Map<String, Object>> getDoctorAppointments(Long doctorId)
+    {
+        try {
+            var appointments = appointmentRepository.findByDoctor_Id(doctorId);
+            var appointmentDTOs = appointments.stream()
+                    .map(appointment -> new AppointmentDTO(
+                            appointment.getId(),
+                            appointment.getDoctor().getId(),
+                            appointment.getDoctor().getName(),
+                            appointment.getPatient().getId(),
+                            appointment.getPatient().getName(),
+                            appointment.getPatient().getEmail(),
+                            appointment.getPatient().getPhone(),
+                            appointment.getPatient().getAddress(),
+                            appointment.getAppointmentTime(),
+                            appointment.getStatus()))
+                    .toList();
+            return ResponseEntity.ok(Map.of("appointments", appointmentDTOs));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("error", "Internal Server Error"));
+        }
+    }
 }

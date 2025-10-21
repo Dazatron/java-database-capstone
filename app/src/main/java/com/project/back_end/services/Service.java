@@ -2,6 +2,7 @@ package com.project.back_end.services;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import com.project.back_end.DTO.Login;
 import com.project.back_end.models.Admin;
 import com.project.back_end.models.Appointment;
+import com.project.back_end.models.Doctor;
 import com.project.back_end.models.Patient;
 import com.project.back_end.repo.jpa.AdminRepository;
 import com.project.back_end.repo.jpa.DoctorRepository;
@@ -73,13 +75,43 @@ public class Service {
     }
 
     @Transactional
-    public ResponseEntity<Map<String, Object>> filterDoctor(String name, String specialty, String time) {
+    public ResponseEntity<Map<String, Object>> filterDoctor(String name, String speciality, String timeRange) {
         try {
-            Map<String, Object> response = doctorService.filterDoctorsByNameSpecilityandTime(name, specialty, time);
+            // Normalize parameters
+            if (isNullOrEmpty(name))
+                name = null;
+            if (isNullOrEmpty(speciality))
+                speciality = null;
+            if (isNullOrEmpty(timeRange))
+                timeRange = null;
+
+            List<Doctor> doctors = doctorRepository.findAll();
+
+            // Apply filters dynamically
+            if (name != null) {
+                doctors = doctorService.filterDoctorByName(doctors, name);
+            }
+
+            if (speciality != null) {
+                doctors = doctorService.filterDoctorBySpeciality(doctors, speciality);
+            }
+
+            if (timeRange != null) {
+                if ("AM".equalsIgnoreCase(timeRange) || "PM".equalsIgnoreCase(timeRange)) {
+                    doctors = doctorService.filterDoctorsByTimePeriod(doctors, timeRange);
+                } else {
+                    doctors = doctorService.filterDoctorByExactTime(doctors, timeRange);
+                }
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("doctors", doctors);
             return ResponseEntity.ok(response);
+
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body(Map.of("error", "An error occurred during doctor filtering"));
+            return ResponseEntity.status(500)
+                    .body(Map.of("error", "An error occurred during doctor filtering"));
         }
     }
 
@@ -170,6 +202,10 @@ public class Service {
             response.put("error", "Internal server error");
             return ResponseEntity.status(500).body(response);
         }
+    }
+
+    private boolean isNullOrEmpty(String value) {
+        return value == null || value.equalsIgnoreCase("null") || value.isBlank();
     }
 
 }

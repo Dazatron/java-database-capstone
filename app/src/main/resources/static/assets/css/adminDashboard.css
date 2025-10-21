@@ -1,4 +1,4 @@
-/*this is the style sheet for the adminDashboard. */
+/* this is the style sheet for the adminDashboard. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
@@ -19,18 +19,63 @@ h2 {
   color: #003e3e; 
 }
 
+/* === Updated main-content === */
 .main-content {
   flex-grow: 1;
   padding: 40px;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   text-align: center;
-  background: url('../images/index.png') no-repeat center center fixed; 
+  background: url('../images/defineRole/index.png') no-repeat center center fixed; 
   background-size: cover; 
+  gap: 30px;
 }
 
+/* === Filters layout === */
+.filters {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filters input,
+.filters select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* === Doctor card grid === */
+.doctor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  justify-items: center;
+}
+
+/* === Individual doctor cards === */
+.doctor-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.doctor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* === Buttons === */
 button {
   background-color: #A62B1F;
   color: white;
@@ -38,9 +83,10 @@ button {
   border-radius: 12px;
   padding: 10px 20px;
   margin-top: 20px;
+  margin-bottom: 20px;
   width: 200px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 16px;  
 }
 
 button:hover {
@@ -61,3 +107,26 @@ button:hover {
   background-color: #f4f4f4; 
   color: #A62B1F; 
 }
+
+.addDoctorModal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255, 1.0);
+    padding: 50px;
+    margin: 30px;
+    width: 50%;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid #A62B1F;
+  }
+
+  .close {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }

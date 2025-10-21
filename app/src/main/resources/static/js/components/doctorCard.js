@@ -1,9 +1,9 @@
 // ===============================
 // Imports
 // ===============================
-import { overlay } from "./loggedPatient.js";
-import { deleteDoctor } from "./doctorServices.js";
-import { fetchPatientDetails } from "./patientServices.js";
+import { showBookingOverlay } from "/js/loggedPatient.js";
+import { deleteDoctor } from "/js/services/doctorServices.js";
+import { getPatientData } from "/js/services/patientServices.js";
 
 // ===============================
 // Function: createDoctorCard
@@ -34,7 +34,6 @@ export function createDoctorCard(doctor) {
   const times = document.createElement("p");
   times.textContent = `Available Times: ${doctor.availableTimes?.join(", ") || "N/A"}`;
 
-  // Append all doctor info elements
   infoContainer.append(name, specialization, email, times);
 
   // ===============================
@@ -58,8 +57,7 @@ export function createDoctorCard(doctor) {
         return;
       }
 
-      const confirmDelete = confirm(`Are you sure you want to delete Dr. ${doctor.name}?`);
-      if (!confirmDelete) return;
+      if (!confirm(`Are you sure you want to delete Dr. ${doctor.name}?`)) return;
 
       try {
         const response = await deleteDoctor(doctor.id, token);
@@ -109,14 +107,14 @@ export function createDoctorCard(doctor) {
       }
 
       try {
-        const patient = await fetchPatientDetails(token);
+        const patient = await getPatientData(token);
         if (!patient) {
           alert("Unable to fetch patient details. Please log in again.");
           return;
         }
 
-        // Trigger the overlay with doctor and patient details
-        overlay(doctor, patient);
+        // Show booking overlay using existing modal styles
+        showBookingOverlay(doctor, patient);
       } catch (error) {
         console.error("Error fetching patient details:", error);
         alert("An error occurred while preparing your booking.");
@@ -131,6 +129,5 @@ export function createDoctorCard(doctor) {
   // ===============================
   card.append(infoContainer, actionsContainer);
 
-  // Return the complete card
   return card;
 }

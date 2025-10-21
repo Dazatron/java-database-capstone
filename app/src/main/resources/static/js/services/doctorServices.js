@@ -1,13 +1,13 @@
-import { BASE_API_URL } from "./config.js";
+import { API_BASE_URL } from "./config.js";
 
-const DOCTOR_API = `${BASE_API_URL}/doctor`;
+const DOCTOR_API = `${API_BASE_URL}/doctor`;
 
 // ===============================
 // Fetch All Doctors
 // ===============================
 export async function getDoctors() {
   try {
-    const response = await fetch(`${DOCTOR_API}/getAll`);
+    const response = await fetch(`${DOCTOR_API}/all`);
     if (!response.ok) throw new Error("Failed to fetch doctors");
     const data = await response.json();
     return data.doctors || [];
@@ -22,7 +22,7 @@ export async function getDoctors() {
 // ===============================
 export async function deleteDoctor(doctorId, token) {
   try {
-    const response = await fetch(`${DOCTOR_API}/delete/${doctorId}/${token}`, {
+    const response = await fetch(`${DOCTOR_API}/${doctorId}/${token}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -76,5 +76,20 @@ export async function filterDoctors(name, time, specialty) {
     console.error("Error during doctor filter request:", error);
     alert("Error fetching filtered doctor list.");
     return { doctors: [] };
+  }
+}
+
+// ===============================
+// Get All Appointments
+// ===============================
+export async function getAllAppointments(doctorId, token) {
+  try {
+    const response = await fetch(`${DOCTOR_API}/appointments/${doctorId}/${token}`);
+    if (!response.ok) throw new Error("Failed to fetch appointments");
+    const data = await response.json();
+    return data.appointments || [];
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    return [];
   }
 }

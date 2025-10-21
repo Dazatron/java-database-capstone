@@ -1,5 +1,5 @@
 // patientServices
-import { API_BASE_URL } from "../config/config.js";
+import { API_BASE_URL } from "/js/services/config.js";
 const PATIENT_API = API_BASE_URL + '/patient'
 
 

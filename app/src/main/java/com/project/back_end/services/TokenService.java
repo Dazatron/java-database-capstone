@@ -1,8 +1,11 @@
 package com.project.back_end.services;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.project.back_end.repo.jpa.AdminRepository;
@@ -26,9 +29,16 @@ public class TokenService {
     @Autowired
     private PatientRepository patientRepository;
 
+    // private SecretKey getSigningKey() {
+    //     String secretKey = System.getenv("JWT_SECRET");
+    //     return Keys.hmacShaKeyFor(secretKey.getBytes());
+    // }
+
+    @Value("${jwt.secret}")
+    private String secretKey;
+
     private SecretKey getSigningKey() {
-        String secretKey = System.getenv("JWT_SECRET");
-        return Keys.hmacShaKeyFor(secretKey.getBytes());
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(String identifier) {

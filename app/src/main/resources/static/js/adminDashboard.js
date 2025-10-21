@@ -1,14 +1,20 @@
-import { getDoctors, filterDoctors, saveDoctor } from "../services/doctorService.js";
-import { openModal, closeModal } from "../scripts/modal.js";
+import { getDoctors, filterDoctors, saveDoctor } from "/js/services/doctorServices.js";
+import { openModal, closeModal } from "/js/services/modal.js";
+import { createDoctorCard } from "/js/components/doctorCard.js";
 
-// Attach event listener to "Add Doctor" button
-document.getElementById("addDoctorBtn")?.addEventListener("click", () => {
-  openModal("addDoctor");
-});
-
-// Load all doctors when DOM is ready
 document.addEventListener("DOMContentLoaded", async () => {
+  // initial render
   await loadDoctorCards();
+
+  // attach filter listeners
+  document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
+  document.getElementById("timeFilter").addEventListener("change", filterDoctorsOnChange);
+  document.getElementById("specialtyFilter").addEventListener("change", filterDoctorsOnChange);
+
+  // Add doctor button listener if exists
+  document.getElementById("addDoctorBtn")?.addEventListener("click", () => {
+    openModal("addDoctor");
+  });
 });
 
 // Function: loadDoctorCards
@@ -22,17 +28,12 @@ async function loadDoctorCards() {
   }
 }
 
-// Attach search/filter listeners
-document.getElementById("searchDoctor")?.addEventListener("input", filterDoctorsOnChange);
-document.getElementById("filterTime")?.addEventListener("change", filterDoctorsOnChange);
-document.getElementById("filterSpecialty")?.addEventListener("change", filterDoctorsOnChange);
-
 // Function: filterDoctorsOnChange
 // Purpose: Fetch and render filtered doctors
 async function filterDoctorsOnChange() {
-  const name = document.getElementById("searchDoctor")?.value.trim() || null;
-  const time = document.getElementById("filterTime")?.value || null;
-  const specialty = document.getElementById("filterSpecialty")?.value || null;
+  const name = document.getElementById("searchBar")?.value.trim() || null;
+  const time = document.getElementById("timeFilter")?.value || null;
+  const specialty = document.getElementById("specialtyFilter")?.value || null;
 
   try {
     const result = await filterDoctors(name, time, specialty);
@@ -54,28 +55,29 @@ async function filterDoctorsOnChange() {
 // Purpose: Display doctor cards
 function renderDoctorCards(doctors) {
   const contentDiv = document.getElementById("content");
+  contentDiv.classList.add("doctor-grid"); // ensure grid always applies
   contentDiv.innerHTML = "";
-
   doctors.forEach((doctor) => {
     const card = createDoctorCard(doctor);
     contentDiv.appendChild(card);
   });
 }
 
+
 // Function: createDoctorCard
 // Purpose: Create a doctor card element
-function createDoctorCard(doctor) {
-  const card = document.createElement("div");
-  card.classList.add("doctor-card");
-  card.innerHTML = `
-    <h3>${doctor.name}</h3>
-    <p><strong>Specialty:</strong> ${doctor.specialty}</p>
-    <p><strong>Email:</strong> ${doctor.email}</p>
-    <p><strong>Phone:</strong> ${doctor.phone}</p>
-    <p><strong>Available Time:</strong> ${doctor.availableTime || "N/A"}</p>
-  `;
-  return card;
-}
+// function createDoctorCard(doctor) {
+//   const card = document.createElement("div");
+//   card.classList.add("doctor-card");
+//   card.innerHTML = `
+//     <h3>${doctor.name}</h3>
+//     <p><strong>Specialty:</strong> ${doctor.specialty}</p>
+//     <p><strong>Email:</strong> ${doctor.email}</p>
+//     <p><strong>Phone:</strong> ${doctor.phone}</p>
+//     <p><strong>Available Time:</strong> ${doctor.availableTime || "N/A"}</p>
+//   `;
+//   return card;
+// }
 
 // Function: adminAddDoctor
 // Purpose: Add a new doctor
@@ -84,8 +86,8 @@ export async function adminAddDoctor() {
   const email = document.getElementById("doctorEmail").value.trim();
   const phone = document.getElementById("doctorPhone").value.trim();
   const password = document.getElementById("doctorPassword").value.trim();
-  const specialty = document.getElementById("doctorSpecialty").value.trim();
-  const availableTime = document.getElementById("doctorAvailableTime").value.trim();
+  const specialty = document.getElementById("specialization").value.trim();
+  const availableTime = document.getElementById("availability").value.trim();
 
   const token = localStorage.getItem("token");
   if (!token) {

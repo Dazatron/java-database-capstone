@@ -77,7 +77,7 @@ public class DoctorController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{token}")
+    @PostMapping("/save/{token}")
     public ResponseEntity<Map<String, Object>> saveDoctor(
             @RequestBody @Valid Doctor doctor,
             @PathVariable String token) {
@@ -195,7 +195,25 @@ public class DoctorController {
             @PathVariable String name,
             @PathVariable String time,
             @PathVariable String speciality) {
-        return service.filterDoctor(name, time, speciality);
+        return service.filterDoctor(name, speciality, time);
     }
 
+    ///appointments/${doctorId}/${token}
+    @GetMapping("/appointments/{doctorId}/{token}")
+    public ResponseEntity<Map<String, Object>> getDoctorAppointments(
+            @PathVariable Long doctorId,
+            @PathVariable String token) {
+        Map<String, Object> response = new HashMap<>();
+
+        // Validate the token for the "doctor" user type
+        var status = service.validateToken(token, "doctor");
+
+        if (status.getStatusCode() != HttpStatus.OK) {
+            response.put("message", "Invalid token or user type");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+
+        // Fetch and return the doctor's appointments
+        return doctorService.getDoctorAppointments(doctorId);
+    }
 }

@@ -80,13 +80,23 @@ public class PatientController {
         return service.validatePatientLogin(login);
     }
 
-    @GetMapping("/{id}/{token}")
+    @GetMapping("/{id}/{user}/{token:.+}")
     public ResponseEntity<Map<String, Object>> getPatientAppointment(@PathVariable Long id,
+            @PathVariable String user,
             @PathVariable String token) {
         Map<String, Object> response = new HashMap<>();
 
         // Validate the token for the "patient" user type
-        var status = service.validateToken(token, "patient");
+        ResponseEntity<Map<String, String>> status = null;
+
+        if (user.equals("patient")) {
+            status = service.validateToken(token, "patient");
+        } 
+
+        if (user.equals("doctor")) {
+            status = service.validateToken(token, "doctor");
+            
+        }
 
         if (status.getStatusCode() != HttpStatus.OK) {
             response.put("message", "Invalid token or user type");

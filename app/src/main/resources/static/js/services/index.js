@@ -1,8 +1,9 @@
 import { openModal } from "./modal.js";
-import { BASE_API_URL } from "./config.js";
+import { API_BASE_URL } from "./config.js";
 
-const ADMIN_API = `${BASE_API_URL}/admin/login`;
-const DOCTOR_API = `${BASE_API_URL}/doctor/login`;
+const ADMIN_API = `${API_BASE_URL}/admin/login`;
+const DOCTOR_API = `${API_BASE_URL}/doctor/login`;
+const PATIENT_API = `${API_BASE_URL}/patient/login`;
 
 // Run after DOM loads
 window.onload = () => {
@@ -72,7 +73,11 @@ window.doctorLoginHandler = async function () {
     return;
   }
 
-  const doctor = { email, password };
+  // Send 'identifier' to match the backend DTO
+  const doctor = { 
+    identifier: email,
+    password: password
+  };
 
   try {
     const response = await fetch(DOCTOR_API, {
@@ -95,3 +100,44 @@ window.doctorLoginHandler = async function () {
     alert("An error occurred while logging in. Please try again later.");
   }
 };
+
+// ===============================
+// Patient Login Handler
+// ===============================
+window.patientLoginHandler = async function () {
+  const email = document.getElementById("patientEmail")?.value?.trim();
+  const password = document.getElementById("patientPassword")?.value?.trim();
+
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
+
+  // Send 'identifier' to match the backend DTO
+  const patient = { 
+    identifier: email,
+    password: password
+  };
+
+  try {
+    const response = await fetch(PATIENT_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patient),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userRole", "patient");
+      alert("Login successful.");
+      selectRole("patient");
+    } else {
+      alert("Invalid credentials. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error logging in patient:", error);
+    alert("An error occurred while logging in. Please try again later.");
+  }
+};
+

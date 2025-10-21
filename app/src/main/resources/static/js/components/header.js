@@ -1,3 +1,6 @@
+import { openModal } from "/js/components/modals.js";
+
+
 function renderHeader() {
   const headerDiv = document.getElementById("header");
 
@@ -32,12 +35,12 @@ function renderHeader() {
 
   if (role === "admin") {
     headerContent += `
-        <button id="addDocBtn" class="adminBtn" onclick="openModal('addDoctor')">Add Doctor</button>
-        <a href="#" onclick="logout()">Logout</a>`;
+        <button id="addDocBtn" class="adminBtn">Add Doctor</button>
+        <a href="#" id="logoutBtn">Logout</a>`;
   } else if (role === "doctor") {
     headerContent += `
            <button class="adminBtn"  onclick="selectRole('doctor')">Home</button>
-           <a href="#" onclick="logout()">Logout</a>`;
+           <a href="#" id="logoutBtn">Logout</a>`;
   } else if (role === "patient") {
     headerContent += `
            <button id="patientLogin" class="adminBtn">Login</button>
@@ -46,7 +49,7 @@ function renderHeader() {
     headerContent += `
            <button id="home" class="adminBtn" onclick="window.location.href='/pages/loggedPatientDashboard.html'">Home</button>
            <button id="patientAppointments" class="adminBtn" onclick="window.location.href='/pages/patientAppointments.html'">Appointments</button>
-           <a href="#" onclick="logoutPatient()">Logout</a>`;
+           <a href="#" id="logoutPatientBtn">Logout</a>`;
   }
 
   headerDiv.innerHTML = headerContent;
@@ -58,7 +61,7 @@ function attachHeaderButtonListeners() {
   const addDocBtn = document.getElementById("addDocBtn");
   const patientLoginBtn = document.getElementById("patientLogin");
   const patientSignupBtn = document.getElementById("patientSignup");
-  
+
 
   // Patient login modal
   if (patientLoginBtn) {
@@ -79,24 +82,29 @@ function attachHeaderButtonListeners() {
   // Admin add doctor modal
   if (addDocBtn) {
     addDocBtn.addEventListener("click", () => {
-      openModal(`<h3>Add Doctor</h3>
-                 <p>Doctor creation form goes here...</p>`);
+      openModal("addDoctor");
     });
   }
-}
 
-// Logout for Admin or Doctor
-function logout() {
-  localStorage.removeItem("userRole");
-  localStorage.removeItem("token");
-  window.location.href = "/";
-}
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    });
 
-// Logout for Logged Patient
-function logoutPatient() {
-  localStorage.setItem("userRole", "patient");
-  localStorage.removeItem("token");
-  window.location.href = "/pages/patientDashboard.html";
+    const logoutPatientBtn = document.getElementById("logoutPatientBtn");
+    if (logoutPatientBtn) {
+      logoutPatientBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        localStorage.setItem("userRole", "patient");
+        localStorage.removeItem("token");
+        window.location.href = "/pages/patientDashboard.html";
+      });
+    }
+  }
 }
 
 // Initialize header rendering when page loads

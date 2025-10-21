@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/style.css}">
     <script th:src="@{/js/render.js}" defer></script>
     <script th:src="@{/js/util.js}" defer></script>
-    <script th:src="@{/js/components/header.js}" defer></script>
+    <script type="module" th:src="@{/js/components/header.js}" defer></script>
     <script th:src="@{/js/components/footer.js}" defer></script>
 </head>
 
@@ -21,36 +21,42 @@
             <div class="wrapper">
                 <div id="header"></div>
                 <div class="main-content">
-                    <input type="text" id="searchBar" placeholder="search by doctor name">
-                    <select id="timeFilter">
-                        <option value="">All Times</option>
-                        <option value="AM">AM</option>
-                        <option value="PM">PM</option>
-                    </select>
-                    <select id="specialtyFilter">
-                        <option value="">All Specialties</option>
-                        <option value="Cardiologist">Cardiologist</option>
-                        <option value="Dentist">Dentist</option>
-                        <option value="Dermatologist">Dermatologist</option>
-                        <option value="Neurologist">Neurologist</option>
-                        <option value="Pediatrician">Pediatrician</option>
-                        <option value="Psychiatrist">Psychiatrist</option>
-                        <option value="Radiologist">Radiologist</option>
-                        <option value="Surgeon">Surgeon</option>
-                    </select>
-                    <div id="content"></div>
+  <div class="filters">
+    <input type="text" id="searchBar" placeholder="Search by doctor name">
+    <select id="timeFilter">
+      <option value="">All Times</option>
+      <option value="AM">AM</option>
+      <option value="PM">PM</option>
+    </select>
+    <select id="specialtyFilter">
+      <option value="">All Specialties</option>
+      <option value="Cardiologist">Cardiologist</option>
+      <option value="Dentist">Dentist</option>
+      <option value="Dermatologist">Dermatologist</option>
+      <option value="Neurologist">Neurologist</option>
+      <option value="Pediatrician">Pediatrician</option>
+      <option value="Psychiatrist">Psychiatrist</option>
+      <option value="Radiologist">Radiologist</option>
+      <option value="Surgeon">Surgeon</option>
+    </select>
+  </div>
+
+  <div id="content" class="doctor-grid"></div>
+</div>
+
                 </div>
                 <div id="footer"></div>
             </div>
         </div>
 
-        <div id="modal" class="modal">
+        <div id="modal" class="addDoctorModal">
             <span id="closeModal" class="close">&times;</span>
             <div id="modal-body"></div>
         </div>
 
-        <script type="module" src="../js/services/adminDashboard.js" defer></script>
-        <script type="module" src="../js/components/doctorCard.js" defer></script>
+        <script type="module" th:src="@{/js/adminDashboard.js}" defer></script>
+        <script type="module" th:src="@{/js/components/doctorCard.js}" defer></script>
+
     </body>
 
 </html>

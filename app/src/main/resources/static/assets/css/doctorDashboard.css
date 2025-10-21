@@ -31,7 +31,7 @@ h2 {
   align-items: center;
   flex-direction: column;
   text-align: center;
-  background: url('../images/index.png') no-repeat center center fixed; 
+  /* background: url('../images/index.png') no-repeat center center fixed;  */
   background-size: cover; 
 }
 
@@ -95,7 +95,7 @@ table tr:nth-child(even) {
 }
 
 table tr:nth-child(odd) {
-  background-color: #ffffffc0; 
+  background-color: #0084ffc0; 
 }
 
 table tr:hover {

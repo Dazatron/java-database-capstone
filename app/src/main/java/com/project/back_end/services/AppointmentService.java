@@ -133,7 +133,7 @@ public class AppointmentService {
             LocalDateTime start = date.atStartOfDay();
             LocalDateTime end = date.plusDays(1).atStartOfDay();
             var appointments = appointmentRepository.findByDoctor_IdAndAppointmentTimeBetween(doctor.getId(), start, end);
-            if (pname != null && !pname.isEmpty()) {
+            if (pname != null && !pname.isEmpty() && !pname.equals("null".toLowerCase())) {
                 appointments = appointments.stream()
                         .filter(app -> app.getPatient().getName().toLowerCase().contains(pname.toLowerCase()))
                         .toList();
